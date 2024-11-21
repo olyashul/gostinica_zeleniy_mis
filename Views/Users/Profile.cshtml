@@ -1,0 +1,20 @@
+﻿@model ptoba_svoego_vhoda_reg_2.Models.User
+
+@{
+    ViewData["Title"] = "Профиль";
+}
+
+
+<h2>Ваш профиль</h2>
+
+@if (Model != null)
+{
+    <p>ID: @Model.Id</p>
+    <p>Номер телефона: @Model.PhoneNumber</p>
+
+    <!-- Добавьте сюда другие поля профиля пользователя по необходимости -->
+}
+else
+{
+    <p>Вы не авторизованы. Пожалуйста, <a asp-action="Login" asp-controller="Account">войдите</a>.</p>
+}
