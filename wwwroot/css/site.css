@@ -49,3 +49,25 @@ body {
         width: 90%; /* Или другой подходящий размер */
     }
 }
+
+.but_reg {
+    background-color: #C1C1C1;
+    width: 220px;
+    height: 53px;
+    font-family: "Charis SIL", serif;
+    font-size: 110%;
+    padding: 0px;
+    margin-top: 20px;
+    margin-left: 200px;
+    display: flex;
+    border-radius: 4px;
+}
+/* Стиль для небольшого разрешения */
+@media (max-width: 767px) {
+    .but_reg {
+        width: 120px;
+        font-size: 80%;
+        height: 43px;
+        margin-left: 70px; /* Или другой подходящий размер */
+    }
+}

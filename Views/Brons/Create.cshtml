@@ -1,0 +1,51 @@
+﻿@model ptoba_svoego_vhoda_reg_2.Models.Bron
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Bron</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Data_zaezd" class="control-label"></label>
+                <input asp-for="Data_zaezd" class="form-control" />
+                <span asp-validation-for="Data_zaezd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data_viezd" class="control-label"></label>
+                <input asp-for="Data_viezd" class="form-control" />
+                <span asp-validation-for="Data_viezd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Stoimost" class="control-label"></label>
+                <input asp-for="Stoimost" class="form-control" />
+                <span asp-validation-for="Stoimost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomerId" class="control-label"></label>
+                <select asp-for="NomerId" class="form-control" asp-items="ViewBag.NomerId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

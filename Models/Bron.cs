@@ -21,5 +21,9 @@ namespace ptoba_svoego_vhoda_reg_2.Models
         public int? NomerId { get; set; } //айди пользователя (внешний ключ)
         [ForeignKey("NomerId")]
         public Nomer? Nomer { get; set; }
+        public Bron()
+        {
+        }
     }
 }
+

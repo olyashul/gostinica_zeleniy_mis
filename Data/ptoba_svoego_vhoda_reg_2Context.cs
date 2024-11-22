@@ -15,7 +15,7 @@ namespace ptoba_svoego_vhoda_reg_2.Data
         }
 
         public DbSet<Nomer> Nomer{ get; set; }
-        public DbSet<Bron> Bron { get; set; }
+        public DbSet<ptoba_svoego_vhoda_reg_2.Models.Bron> Bron { get; set; } = default!;
         public DbSet<ptoba_svoego_vhoda_reg_2.Models.User> User { get; set; } = default!;
     }
 }

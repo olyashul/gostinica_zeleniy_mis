@@ -162,7 +162,7 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(User user)
+        public async Task<IActionResult> Register(User user)
         {
             if (string.IsNullOrEmpty(user.FirstName) ||
                 string.IsNullOrEmpty(user.LastName) ||
@@ -196,7 +196,7 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
             if (ModelState.IsValid)
             {
                 _context.User.Add(user);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync(); //  !!! ИЗМЕНЕНИЕ !!!  Используем асинхронный метод
                 return RedirectToAction("Login");
             }
             return View(user);
