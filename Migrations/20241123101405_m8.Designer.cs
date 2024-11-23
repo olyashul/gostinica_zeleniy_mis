@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ptoba_svoego_vhoda_reg_2.Data;
 
@@ -11,9 +12,11 @@ using ptoba_svoego_vhoda_reg_2.Data;
 namespace ptoba_svoego_vhoda_reg_2.Migrations
 {
     [DbContext(typeof(ptoba_svoego_vhoda_reg_2Context))]
-    partial class ptoba_svoego_vhoda_reg_2ContextModelSnapshot : ModelSnapshot
+    [Migration("20241123101405_m8")]
+    partial class m8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

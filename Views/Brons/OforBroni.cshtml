@@ -1,18 +1,22 @@
 ﻿@model ptoba_svoego_vhoda_reg_2.Models.Bron
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "OforBroni"; // Изменено название
 }
 
-<h1>Edit</h1>
+<h1>Оформить бронирование</h1>  <!-- Добавлено более понятное название -->
 
-<h4>Bron</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <form asp-action="OforBroni" method="post">
+            <!-- Изменено asp-action -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="NomerId" class="control-label"></label>
+                <select asp-for="NomerId" class="form-control" asp-items="ViewBag.NomerId"></select>
+                <span asp-validation-for="NomerId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Data_zaezd" class="control-label"></label>
                 <input asp-for="Data_zaezd" class="form-control" />
@@ -28,27 +32,20 @@
                 <input asp-for="Stoimost" class="form-control" />
                 <span asp-validation-for="Stoimost" class="text-danger"></span>
             </div>
+          
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NomerId" class="control-label"></label>
-                <select asp-for="NomerId" class="form-control" asp-items="ViewBag.NomerId"></select>
-                <span asp-validation-for="NomerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Забронировать" class="btn btn-primary" />  <!-- Более подходящая надпись -->
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад к списку</a>  <!-- Более подходящая надпись -->
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

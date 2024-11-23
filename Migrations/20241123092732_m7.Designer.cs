@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ptoba_svoego_vhoda_reg_2.Data;
 
@@ -11,9 +12,11 @@ using ptoba_svoego_vhoda_reg_2.Data;
 namespace ptoba_svoego_vhoda_reg_2.Migrations
 {
     [DbContext(typeof(ptoba_svoego_vhoda_reg_2Context))]
-    partial class ptoba_svoego_vhoda_reg_2ContextModelSnapshot : ModelSnapshot
+    [Migration("20241123092732_m7")]
+    partial class m7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,13 +39,13 @@ namespace ptoba_svoego_vhoda_reg_2.Migrations
                     b.Property<DateTime>("Data_zaezd")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("NomerId")
+                    b.Property<int?>("NomerId")
                         .HasColumnType("int");
 
                     b.Property<double>("Stoimost")
                         .HasColumnType("float");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -111,15 +114,11 @@ namespace ptoba_svoego_vhoda_reg_2.Migrations
                 {
                     b.HasOne("ptoba_svoego_vhoda_reg_2.Models.Nomer", "Nomer")
                         .WithMany()
-                        .HasForeignKey("NomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NomerId");
 
                     b.HasOne("ptoba_svoego_vhoda_reg_2.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Nomer");
 

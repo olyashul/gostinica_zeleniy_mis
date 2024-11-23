@@ -13,18 +13,21 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
     public class BronsController : Controller
     {
         private readonly ptoba_svoego_vhoda_reg_2Context _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public BronsController(ptoba_svoego_vhoda_reg_2Context context)
+        public BronsController(ptoba_svoego_vhoda_reg_2Context context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         // GET: Brons
         public async Task<IActionResult> Index()
         {
-            var bron = await _context.Bron.Include(b => b.Nomer).Include(b => b.User).ToListAsync();
-            return View(bron); //Более чистый код
+            var ptoba_svoego_vhoda_reg_2Context = _context.Bron.Include(b => b.Nomer).Include(b => b.User);
+            return View(await ptoba_svoego_vhoda_reg_2Context.ToListAsync());
         }
+
         // GET: Brons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,42 +51,50 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
         // GET: Brons/Create
         public IActionResult Create()
         {
-            // Загрузка данных пользователей
-            var users = _context.User.Select(u => new { Id = u.Id, FirstName = u.FirstName }).ToList();
-            ViewBag.UserId = new SelectList(users, "Id", "FirstName");
-
-            // Загрузка данных номеров
-            var nomers = _context.Nomer.Select(n => new { Id = n.Id, Name = n.Name }).ToList();
-            ViewBag.NomerId = new SelectList(nomers, "Id", "Name");
-
+            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id"); // Или другое подходящее поле для отображения
             return View();
         }
 
         // POST: Brons/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Bron bron)
+        public async Task<IActionResult> Create([Bind("Data_zaezd, Data_viezd, Stoimost, UserId, NomerId")] Bron bron)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(bron);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index)); // Перенаправление на страницу со списком броней
+                try
+                {
+                    _context.Add(bron);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", $"Ошибка сохранения: {ex.Message}");
+                    Console.WriteLine($"Error saving changes: {ex.Message}");
+                    Console.WriteLine(ex.StackTrace);
+                }
             }
-            // Загрузка данных пользователей и номеров (как в методе GET)
-            var users = _context.User.Select(u => new { Id = u.Id, FirstName = u.FirstName }).ToList();
-            ViewBag.UserId = new SelectList(users, "Id", "FirstName");
-            var nomers = _context.Nomer.Select(n => new { Id = n.Id, Name = n.Name }).ToList();
-            ViewBag.NomerId = new SelectList(nomers, "Id", "Name");
-            return View(bron); // Возврат на форму с ошибками валидации, если таковые есть
+        
+            if (!ModelState.IsValid)
+            {
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        Console.WriteLine($"Error: {error.ErrorMessage}");
+                    }
+                }
+            }
+            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id", bron.NomerId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", bron.UserId);
+            return View(bron);
         }
 
-        // GET: Brons/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Bron == null)
             {
                 return NotFound();
             }
@@ -99,11 +110,9 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
         }
 
         // POST: Brons/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Data_zaezd,Data_viezd,Stoimost,UserId,NomerId")] Bron bron)
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Data_zaezd, Data_viezd, Stoimost, UserId, NomerId")] Bron bron)
         {
             if (id != bron.Id)
             {
@@ -116,6 +125,7 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
                 {
                     _context.Update(bron);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -128,12 +138,12 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id", bron.NomerId);
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", bron.UserId);
             return View(bron);
         }
+
 
         // GET: Brons/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -170,9 +180,74 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+
+
+
+
+
+        public IActionResult Oforbron()
+        {
+            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id");
+            // Убрали ViewData["UserId"] — UserId теперь берется из сессии
+            return View();
+
+        }
+
+
+
+
+        public IActionResult OforBroni()
+        {
+            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id");
+            return View();
+        }
+
+
+
+
+        // POST: Brons/Oforbron (изменили Create на Oforbron)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> OforBroni([Bind("Data_zaezd, Data_viezd, Stoimost, NomerId")] Bron bron)
+        {
+            int? userId = _httpContextAccessor.HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null || userId == 0)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            bron.UserId = userId.Value;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Add(bron);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", $"Ошибка сохранения: {ex.Message}");
+                    Console.WriteLine($"Error saving changes: {ex.Message}");
+                    Console.WriteLine(ex.StackTrace);
+                }
+            }
+
+            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id", bron.NomerId);
+            return View(bron);
+        }
+
+
+
+
+
+
         private bool BronExists(int id)
         {
-            return _context.Bron.Any(e => e.Id == id);
+            return (_context.Bron?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
