@@ -6,13 +6,42 @@
 
 
 <h2>Ваш профиль</h2>
-
 @if (Model != null)
 {
     <p>ID: @Model.Id</p>
+    <p>Имя: @Model.FirstName</p>
+    <p>Фамилия: @Model.LastName</p>
     <p>Номер телефона: @Model.PhoneNumber</p>
-
-    <!-- Добавьте сюда другие поля профиля пользователя по необходимости -->
+    <p>Email: @Model.Email</p>
+    <h3>Ваши бронирования:</h3>
+    @if (Model.Brons.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Дата заезда</th>
+                    <th>Дата выезда</th>
+                    <th>Стоимость</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var bron in Model.Brons)
+                {
+                    <tr>
+                        <td>@bron.Nomer.Name</td>
+                        <td>@bron.Data_zaezd.ToShortDateString()</td>
+                        <td>@bron.Data_viezd.ToShortDateString()</td>
+                        <td>@bron.Stoimost</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>У вас нет активных бронирований.</p>
+    }
 }
 else
 {

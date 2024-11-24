@@ -28,33 +28,22 @@
                 <span asp-validation-for="Data_viezd" class="text-danger"></span>
             </div>
 
-            @* <div class="form-group"> *@
-            @*     <label asp-for="Stoimost" class="control-label"></label> *@
-            @*     <input asp-for="Stoimost" class="form-control" /> *@
-            @*     <span asp-validation-for="Stoimost" class="text-danger"></span> *@
-            @* </div> *@
-
             
             <div class="form-group">
                 <input type="submit" value="Забронировать" class="btn btn-primary" />
             </div>
 
+            <div id="bookedPeriods"></div>
+            <div class="form-group">
+                <label asp-for="Stoimost" class="control-label">Стоимость</label>
+                <input type="hidden" asp-for="Stoimost" id="Stoimost" />  <!-- Скрытое поле для Стоимости -->
+                <span id="totalCost"></span>
+                <span asp-validation-for="Stoimost" class="text-danger"></span>
+            </div>
  
         </form>
         
     </div>
-
-    <form asp-action="AllGetBookedDates" method="get">
-        <div id="bookedPeriods"></div>
-        <div class="form-group">
-            <label asp-for="Stoimost" class="control-label">Стоимость</label>  <!-- Добавил подпись -->
-            <span id="totalCost"></span>
-            <span asp-validation-for="Stoimost" class="text-danger"></span>
-        </div>
-    </form>
-
-
-
 
 
 </div>
@@ -71,7 +60,8 @@
                  $(document).ready(function() {
                     function updateBookedDates(nomerId) {
                         $.ajax({
-                            url: '/Brons/AllGetBookedDates?NomerId=' + nomerId,
+                            url: '/Brons/AllGetBookedDates?NomerId=' + nomerId + '&_=' + new Date().getTime(),
+                             cache: false,
                             type: 'GET',
                             dataType: 'json',
                             success: function(bookedPeriods) {
@@ -100,15 +90,22 @@
                             },
                             error: function(error) {
                                 $("#bookedPeriods").html('<p class="alert alert-danger">Ошибка при получении данных.</p>');
+
                             }
                         });
                     }
 
                     // Пример вызова функции с передачей ID номера (NomerId)
-                    let nomerId = $("#NomerId").val(); // Получаем ID номера из элемента select или input
-                    updateBookedDates(nomerId); // Загружаем забронированные даты при загрузке страницы
+                    // let nomerId = $("#NomerId").val(); Получаем ID номера из элемента select или input
+                    // updateBookedDates(nomerId); Загружаем забронированные даты при загрузке страницы
+                         let nomerId = $("#NomerId").val(); //Получаем ID номера из элемента select или input
+                          updateBookedDates(nomerId); //Загружаем забронированные даты при загрузке страницы
+               $("#NomerId").change(function() {
+               let nomerId = $(this).val(); // Получаем ID номера после изменения выбора
+               updateBookedDates(nomerId); // Загружаем забронированные даты для нового номера
+           });
 
-            $("#NomerId").change(updateBookedDates);
+            // $("#NomerId").change(updateBookedDates);
             $("#Data_zaezd").after('<div id="error-message-zaezd" class="alert alert-danger" style="display:none;"></div>');
             $("#Data_viezd").after('<div id="error-message-viezd" class="alert alert-danger" style="display:none;"></div>');
 
@@ -196,7 +193,8 @@
                             let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
                             let totalCost = diffDays * pricePerDay;
-                            $('#totalCost').text(totalCost + " руб."); // Вывод в #totalCost
+                            $('#totalCost').text(totalCost + " руб.");
+                            $('#Stoimost').val(totalCost);// Вывод в #totalCost
                         } else {
                             alert("Ошибка получения цены за сутки.");
                             $('#totalCost').text(''); // Очищаем вывод при ошибке

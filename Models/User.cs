@@ -24,11 +24,9 @@ namespace ptoba_svoego_vhoda_reg_2.Models
         public string Email { get; set; }
 
         public string Password{ get; set; }
+        public ICollection<Bron> Brons { get; set; } = new List<Bron>();
 
-        //[Required]
-        //public string Password { get; set; } // НЕБЕЗОПАСНО для продакшна!
 
-        //public List<Brons> Brons { get; set; } // Связь с бронями
         public User() { 
         }
     }

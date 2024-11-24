@@ -187,20 +187,9 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
 
 
 
-        public IActionResult Oforbron()
-        {
-            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id");
-            // Убрали ViewData["UserId"] — UserId теперь берется из сессии
-            return View();
-
-        }
-
-
-
-
         public IActionResult OforBroni()
         {
-            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id");
+            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Name"); // Изменено здесь
             return View();
         }
 
@@ -220,14 +209,16 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
             }
 
             bron.UserId = userId.Value;
-
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Сохранение стоимости, полученной из формы
                     _context.Add(bron);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    //return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Profile", "Users");
+
                 }
                 catch (Exception ex)
                 {
@@ -239,8 +230,6 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
 
             ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id", bron.NomerId);
             return View(bron);
-
-
         }
 
 
@@ -277,6 +266,8 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
         [HttpGet]
         public IActionResult AllGetBookedDates(int NomerId)
         {
+            Console.WriteLine("Полученный NomerId: " + NomerId); // Добавьте эту строку
+
             var bookedPeriods = _context.Bron
                 .Where(b => b.NomerId == NomerId)
                 .Select(b => new

@@ -234,18 +234,23 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
             int? userId = _httpContextAccessor.HttpContext.Session.GetInt32("UserId");
             if (userId.HasValue)
             {
-                var user = _context.User.Find(userId.Value);
+                var user = _context.User
+                    .Include(u => u.Brons) 
+                    .ThenInclude(b => b.Nomer) //  Добавленно:  загрузка данных номера
+                    .FirstOrDefault(u => u.Id == userId.Value);
+
                 if (user != null)
                 {
-                    return View(user); // Предполагается наличие представления Profile.cshtml
+                    return View(user);
                 }
                 else
                 {
-                    return RedirectToAction("Logout"); // Пользователь удален, выходим из системы
+                    return RedirectToAction("Logout");
                 }
             }
-            return RedirectToAction("Login"); // Пользователь не авторизован
+            return RedirectToAction("Login");
         }
+
 
         private bool UserExists(int id)
         {
