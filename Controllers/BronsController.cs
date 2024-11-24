@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using ptoba_svoego_vhoda_reg_2.Data;
 using ptoba_svoego_vhoda_reg_2.Models;
 
+
 namespace ptoba_svoego_vhoda_reg_2.Controllers
 {
     public class BronsController : Controller
@@ -76,7 +77,7 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
                     Console.WriteLine(ex.StackTrace);
                 }
             }
-        
+
             if (!ModelState.IsValid)
             {
                 foreach (var modelState in ModelState.Values)
@@ -206,7 +207,7 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
 
 
 
-        // POST: Brons/Oforbron (изменили Create на Oforbron)
+        //POST: Brons/Oforbron(изменили Create на Oforbron)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OforBroni([Bind("Data_zaezd, Data_viezd, Stoimost, NomerId")] Bron bron)
@@ -238,10 +239,55 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
 
             ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Id", bron.NomerId);
             return View(bron);
+
+
+        }
+
+
+        [HttpGet]
+        public IActionResult GetPricePerDay(int NomerId)
+        {
+            var nomer = _context.Nomer.Find(NomerId);
+            if (nomer == null)
+            {
+                return Json(null); // Или вернуть ошибку
+            }
+            return Json(nomer.PricePerDay);
         }
 
 
 
+
+        [HttpGet]
+        public IActionResult GetBookedDates(int nomerId, string date)
+        {
+            // Преобразуем строку date в DateTime
+            if (!DateTime.TryParse(date, out DateTime selectedDate))
+            {
+                return Json(false); // Некорректная дата
+            }
+
+            var isBooked = _context.Bron
+                .Any(b => b.NomerId == nomerId && b.Data_zaezd <= selectedDate && b.Data_viezd >= selectedDate);
+
+            return Json(isBooked);
+        }
+
+
+        [HttpGet]
+        public IActionResult AllGetBookedDates(int NomerId)
+        {
+            var bookedPeriods = _context.Bron
+                .Where(b => b.NomerId == NomerId)
+                .Select(b => new
+                {
+                    StartDate = b.Data_zaezd == DateTime.MinValue ? "" : b.Data_zaezd.ToString("yyyy-MM-dd"),
+                    EndDate = b.Data_viezd == DateTime.MinValue ? "" : b.Data_viezd.ToString("yyyy-MM-dd")
+                })
+                .ToList();
+
+            return Json(bookedPeriods);
+        }
 
 
 

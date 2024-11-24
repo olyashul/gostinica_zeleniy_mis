@@ -70,15 +70,17 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapControllerRoute(
-    name: "brons",
-    pattern: "brons/{action=Index}/{id?}",
-    defaults: new { controller = "Brons" });
-
-app.MapControllerRoute(
-    name: "users",
-    pattern: "users/{action=Index}/{id?}",
-    defaults: new { controller = "Users" });
-
-
 app.Run();
+
+//app.MapControllerRoute(
+//    name: "brons",
+//    pattern: "brons/{action=Index}/{id?}",
+//    defaults: new { controller = "Brons" });
+
+//app.MapControllerRoute(
+//    name: "users",
+//    pattern: "users/{action=Index}/{id?}",
+//    defaults: new { controller = "Users" });
+
+
+//app.Run();

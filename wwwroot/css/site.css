@@ -71,3 +71,10 @@ body {
         margin-left: 70px; /* Или другой подходящий размер */
     }
 }
+
+
+
+.flatpickr-day.flatpickr-disabled {
+    background-color: red; /* Или другой цвет */
+    color: white;
+}

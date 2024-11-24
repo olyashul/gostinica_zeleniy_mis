@@ -1,51 +1,226 @@
 ﻿@model ptoba_svoego_vhoda_reg_2.Models.Bron
-
 @{
-    ViewData["Title"] = "OforBroni"; // Изменено название
+    ViewData["Title"] = "Оформить бронирование";
 }
 
-<h1>Оформить бронирование</h1>  <!-- Добавлено более понятное название -->
+<h1>Оформить бронирование</h1>
 
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="OforBroni" method="post">
-            <!-- Изменено asp-action -->
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="NomerId" class="control-label"></label>
                 <select asp-for="NomerId" class="form-control" asp-items="ViewBag.NomerId"></select>
                 <span asp-validation-for="NomerId" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Data_zaezd" class="control-label"></label>
-                <input asp-for="Data_zaezd" class="form-control" />
+                <input type="date" asp-for="Data_zaezd" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="Data_zaezd" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Data_viezd" class="control-label"></label>
-                <input asp-for="Data_viezd" class="form-control" />
+                <input type="date" asp-for="Data_viezd" class="form-control" />
                 <span asp-validation-for="Data_viezd" class="text-danger"></span>
             </div>
+
+            @* <div class="form-group"> *@
+            @*     <label asp-for="Stoimost" class="control-label"></label> *@
+            @*     <input asp-for="Stoimost" class="form-control" /> *@
+            @*     <span asp-validation-for="Stoimost" class="text-danger"></span> *@
+            @* </div> *@
+
+            
             <div class="form-group">
-                <label asp-for="Stoimost" class="control-label"></label>
-                <input asp-for="Stoimost" class="form-control" />
-                <span asp-validation-for="Stoimost" class="text-danger"></span>
+                <input type="submit" value="Забронировать" class="btn btn-primary" />
             </div>
-          
-            <div class="form-group">
-                <input type="submit" value="Забронировать" class="btn btn-primary" />  <!-- Более подходящая надпись -->
-            </div>
+
+ 
         </form>
+        
     </div>
+
+    <form asp-action="AllGetBookedDates" method="get">
+        <div id="bookedPeriods"></div>
+        <div class="form-group">
+            <label asp-for="Stoimost" class="control-label">Стоимость</label>  <!-- Добавил подпись -->
+            <span id="totalCost"></span>
+            <span asp-validation-for="Stoimost" class="text-danger"></span>
+        </div>
+    </form>
+
+
+
+
+
 </div>
 
-<div>
-    <a asp-action="Index">Назад к списку</a>  <!-- Более подходящая надпись -->
-</div>
 
-@section Scripts {
+
+
+    @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+                 $(document).ready(function() {
+                    function updateBookedDates(nomerId) {
+                        $.ajax({
+                            url: '/Brons/AllGetBookedDates?NomerId=' + nomerId,
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function(bookedPeriods) {
+                                // Создаем таблицу
+                                let table = $('<table class="table table-bordered"></table>');
+                                let header = $('<tr><th>Занятые периоды</th></tr>');
+                                table.append(header);
+
+                                // Проверяем, что есть забронированные даты
+                                if (bookedPeriods.length === 0) {
+                                    let row = $('<tr><td>Нет забронированных периодов</td></tr>');
+                                    table.append(row);
+                                } else {
+                                    // Проходим по забронированным датам и создаем строки таблицы
+                                    $.each(bookedPeriods, function(index, period) {
+                                        let startDate = period.startDate ? period.startDate : "Не указано";
+                                        let endDate = period.endDate ? period.endDate : "Не указано";
+
+                                        let row = $('<tr><td>' + startDate + ' - ' + endDate + '</td></tr>');
+                                        table.append(row);
+                                    });
+                                }
+
+                                // Вставляем таблицу в нужное место на странице
+                                $("#bookedPeriods").html(table);
+                            },
+                            error: function(error) {
+                                $("#bookedPeriods").html('<p class="alert alert-danger">Ошибка при получении данных.</p>');
+                            }
+                        });
+                    }
+
+                    // Пример вызова функции с передачей ID номера (NomerId)
+                    let nomerId = $("#NomerId").val(); // Получаем ID номера из элемента select или input
+                    updateBookedDates(nomerId); // Загружаем забронированные даты при загрузке страницы
+
+            $("#NomerId").change(updateBookedDates);
+            $("#Data_zaezd").after('<div id="error-message-zaezd" class="alert alert-danger" style="display:none;"></div>');
+            $("#Data_viezd").after('<div id="error-message-viezd" class="alert alert-danger" style="display:none;"></div>');
+
+
+            $("#Data_zaezd").change(function() {
+                let date = $(this).val();
+                let nomerId = $("#NomerId").val();
+                let errorMessageDiv = $("#error-message-zaezd");
+                $.ajax({
+                    url: '/Brons/GetBookedDates?nomerId=' + nomerId + '&date=' + date,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(isBooked) {
+                        errorMessageDiv.hide();
+                        if (isBooked) {
+                            errorMessageDiv.text("Извините, эта дата уже занята.").show();
+                            $("#Data_zaezd").val("");
+                        }
+                       
+                    },
+                    error: function(error) {
+                        let message = "Произошла ошибка при проверке даты.";
+                        if (error.responseJSON && error.responseJSON.message) {
+                            message = error.responseJSON.message;
+                        }
+                        errorMessageDiv.text(message).show();
+                    }
+                });
+            });
+
+            $("#Data_viezd").change(function() {
+                let date = $(this).val();
+                let nomerId = $("#NomerId").val();
+                let errorMessageDiv = $("#error-message-viezd");
+                $.ajax({
+                    url: '/Brons/GetBookedDates?nomerId=' + nomerId + '&date=' + date,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(isBooked) {
+                        errorMessageDiv.hide();
+                        if (isBooked) {
+                            errorMessageDiv.text("Извините, эта дата уже занята.").show();
+                            $("#Data_viezd").val("");
+                        }      
+                    },
+
+                    error: function(error) {
+                        let message = "Произошла ошибка при проверке даты.";
+                        if (error.responseJSON && error.responseJSON.message) {
+                            message = error.responseJSON.message;
+                        }
+                        errorMessageDiv.text(message).show();
+                    }
+                });
+            });
+       
+
+             $("#Data_viezd").change(function() {
+            let date_zaezd = new Date($("#Data_zaezd").val());
+            let date_viezd = new Date($(this).val());
+            let errorMessageDiv = $("#error-message-zaezd");
+
+            if (date_viezd <= date_zaezd) {
+                errorMessageDiv.text("Дата выезда не может быть раньше или равна дате заезда!").show();
+                $(this).val(""); // Очищаем поле даты выезда
+            }
+        });
+
+
+        function calculateCost() {
+            let nomerId = $('#NomerId').val();
+            let dataZaезд = $('#Data_zaezd').val();
+            let dataViезд = $('#Data_viezd').val();
+
+            if (nomerId && dataZaезд && dataViезд) {
+                $.ajax({
+                    url: '/Brons/GetPricePerDay?NomerId=' + nomerId,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(pricePerDay) {
+                        if (pricePerDay) {
+                            let date1 = new Date(dataZaезд);
+                            let date2 = new Date(dataViезд);
+                            let diffTime = Math.abs(date2 - date1);
+                            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                            let totalCost = diffDays * pricePerDay;
+                            $('#totalCost').text(totalCost + " руб."); // Вывод в #totalCost
+                        } else {
+                            alert("Ошибка получения цены за сутки.");
+                            $('#totalCost').text(''); // Очищаем вывод при ошибке
+                        }
+                    },
+                    error: function() {
+                        alert("Ошибка при обращении к серверу.");
+                        $('#totalCost').text(''); // Очищаем вывод при ошибке
+                    }
+                });
+            } else {
+                $('#totalCost').text(''); // Очищаем вывод, если не все данные введены
+            }
+        }
+
+        $('#NomerId, #Data_zaezd, #Data_viezd').change(calculateCost);
+        calculateCost(); // Вызов при загрузке страницы
+
+        });
+       
+
+
+
+
+    </script>
+
 }
