@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Главная страница";
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/main.css">  <!-- Убедитесь, что путь верный -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body style="background-color:#EBEAE8;">
+    <header>
+        <nav>
+            <ul style="list-style: none;">
+                <li>
+                    <a asp-action="glav">
+                        <img src="~/image/logotip2.jpg"
+                             style="height: 65px; padding: 0px 20px 0px 20px">
+                    </a>
+                </li>
+                <li><a asp-controller="Brons" asp-action="glav" class="ssilki-pl" style="margin-top: -10px; ">Зеленый <br> Мыс </a></li>
+                <li><a asp-controller="Brons" a asp-action="bronirovanie" class="ssilki-pl" style="padding-left: 60px;">Бронирование</a></li>
+                <li><a asp-controller="Brons" a asp-action="onas" class="ssilki-pl">О нас</a></li>
+                <li><a asp-controller="Brons" a asp-action="contacti" class="ssilki-pl">Контакты</a></li>
+                <li>
+                    <a asp-controller="Users" asp-action="Profile"> <img src="~/image/profil.jpg" style="height: 80px; padding-left: 100px"></a>
+                </li>
+
+            </ul>
+
+        </nav>
+    </header>
+
+    <main class="bron_prosmotr">
+        <div> </div>
+        <div></div>
+
+        <div style="position: relative;">
+            <img src="/image/domik_na_dereve_bol.jpg" class="photo_bb">
+        </div>
+
+
+        <div>
+            <p class="nadpis_bron_prosmotr">Домик на дереве</p>
+            <p class="opis_br_prosmotr">
+                Любуйтесь удивительной <br> природой этих мест через <br> панорамное окно, лежа на
+                <br> мягчайшем матрасе
+            </p>
+        </div>
+
+        <div style="position: relative;">
+            <img src="/image/domik_na_dereve_tualet.jpg" class="photo_bb">
+        </div>
+
+
+
+
+        <div>
+            <p class="nadpis_bron_prosmotr">
+                Цена за сутки
+                <br> 10000р
+            </p>
+
+            <a asp-action="ShowBronForm" class="but_zabron"> ЗАБРОНИРОВАТЬ</a>
+
+         
+
+
+        </div>
+
+    </main>
+</body>
+</html>

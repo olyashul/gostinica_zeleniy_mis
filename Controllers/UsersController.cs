@@ -215,7 +215,7 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
             {
                 // Сохраняем ID пользователя в сессии
                 _httpContextAccessor.HttpContext.Session.SetInt32("UserId", user.Id);
-                return RedirectToAction("OforBroni", "Brons");
+                return RedirectToAction("glav", "Brons");
             }
             ModelState.AddModelError("", "Неверный номер телефона или пароль");
             return View();

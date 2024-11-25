@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Главная страница";
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/main.css">  <!-- Убедитесь, что путь верный -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charis+SIL:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+
+<body style="background-color:#EBEAE8;">
+    <header>
+        <nav>
+            <ul style="list-style: none;">
+                <li>
+                    <a asp-action="glav">
+                        <img src="~/image/logotip2.jpg"
+                             style="height: 65px; padding: 0px 20px 0px 20px">
+                    </a>
+                </li>
+                <li><a asp-controller="Brons" asp-action="glav" class="ssilki-pl" style="margin-top: -10px; ">Зеленый <br> Мыс </a></li>
+                <li><a asp-controller="Brons" a asp-action="bronirovanie" class="ssilki-pl" style="padding-left: 60px;">Бронирование</a></li>
+                <li><a asp-controller="Brons" a asp-action="onas" class="ssilki-pl">О нас</a></li>
+                <li><a asp-controller="Brons" a asp-action="contacti" class="ssilki-pl">Контакты</a></li>
+                <li>
+                    <a asp-controller="Users" asp-action="Profile"> <img src="~/image/profil.jpg" style="height: 80px; padding-left: 100px"></a>
+                </li>
+
+            </ul>
+
+        </nav>
+    </header>
+
+    <main class="body_cont">
+        <div>1</div>
+        <div></div>
+
+        <div class="lev_cont">
+            <p>
+                Мы активно ведем наши<br>
+                соцсети и всегда рады <br>
+                видеть Вас там! Если у <br>
+                Вас возникают вопросы, <br>
+                то вы всегда можете <br>
+                позвонить нам и мы с<br>
+                радостью Вам ответим!<br>
+                Приходите к нам в гости, мы Вас ждем!
+            </p>
+        </div>
+
+        <div style="position:relative;overflow:hidden; padding-top:20px" class="cart">
+            <a href="https://yandex.ru/maps/10990/gelendgik/?utm_medium=mapframe&utm_source=maps"
+               style="color:#eee;font-size:12px;position:absolute;top:0px;">Геленджик</a>
+            <a href="https://yandex.ru/maps/10990/gelendgik/?ll=38.050172%2C44.551836&mode=whatshere&utm_medium=mapframe&utm_source=maps&whatshere%5Bpoint%5D=38.049167%2C44.551914&whatshere%5Bzoom%5D=17.89&z=17.89"
+               style="color:#eee;font-size:12px;position:absolute;top:14px;">Микрорайон Толстый Мыс — Яндекс Карты</a>
+            <iframe src="https://yandex.ru/map-widget/v1/?ll=38.050172%2C44.551836&mode=whatshere&whatshere%5Bpoint%5D=38.049167%2C44.551914&whatshere%5Bzoom%5D=17.89&z=17.89"
+                    width="750" height="400" frameborder="1" allowfullscreen="true" style="position:relative;">
+            </iframe>
+        </div>
+
+        <div class="adres_c">
+            <p>
+                Адрес: Г. Геленджик ул. Ленина д.1 <br>
+                Номер телефона: 8 999 999-99-99
+            </p>
+        </div>
+
+        <div class="vk_c">
+            <a href="https://vk.com/club227752490">
+                <img style=" height: 40px; padding: 5px 30px 0px 100px; float: left; margin-top: 20px;" src="/image/vk.jpg">
+            </a>
+            <p style="padding-top:20px"> Наша группа в ВК!</p>
+        </div>
+
+        <div class="tg_c">
+            <a href="https://t.me/greencapeglj">
+                <img style=" height: 40px; padding: 5px 30px 0px 100px; float: left; margin-top: 20px;"
+                     src="/image/telegram.jpg">
+            </a>
+            <p style="padding-top:20px"> Наш канал в ТГ!</p>
+        </div>
+
+    </main>
+</body>
+</html>

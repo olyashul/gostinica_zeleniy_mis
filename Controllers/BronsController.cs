@@ -196,6 +196,15 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
 
 
 
+
+        public IActionResult ShowBronForm()  // Новое имя для GET-метода
+        {
+            ViewData["NomerId"] = new SelectList(_context.Nomer, "Id", "Name");
+            return View("OforBroni"); // Используем ту же View, что и раньше
+        }
+
+
+
         //POST: Brons/Oforbron(изменили Create на Oforbron)
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -286,5 +295,67 @@ namespace ptoba_svoego_vhoda_reg_2.Controllers
         {
             return (_context.Bron?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
+     
+            public IActionResult glav()
+            {
+                return View();
+            }
+
+        public IActionResult bronirovanie()
+        {
+            return View();
+        }
+        public IActionResult onas ()
+        {
+            return View();
+        }
+        public IActionResult contacti()
+        {
+            return View();
+        }
+
+        public IActionResult zel_list()
+        {
+            return View();
+    
+        }
+
+        public IActionResult morskoi_zakat()
+        {
+            return View();
+
+        }
+
+        public IActionResult minimalist_otdih()
+        {
+            return View();
+
+        }
+
+        public IActionResult semeyniy_otdih()
+        {
+            return View();
+
+        }
+
+        public IActionResult lazur_glad()
+        {
+            return View();
+
+        }
+
+        public IActionResult domik_na_der()
+        {
+            return View();
+
+        }
+
+        public IActionResult zhemch_myagc()
+        {
+            return View();
+
+        }
+
     }
 }

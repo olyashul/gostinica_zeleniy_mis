@@ -22,6 +22,11 @@ body {
 }
 
 
+
+
+
+/*ВХОД И РЕГИСТРАЦИЯ*/
+
 .body_reg {
     background-color: #EBEAE8;
     background-image: url(../image/more_registrac.jpg);
@@ -58,7 +63,7 @@ body {
     font-size: 110%;
     padding: 0px;
     margin-top: 20px;
-    margin-left: 200px;
+    margin-left: 250px;
     display: flex;
     border-radius: 4px;
 }
@@ -79,6 +84,11 @@ body {
     color: white;
 }
 
+
+
+
+/*ВЕРХНЯЯ ПЛАШКА И НИЖНЯЯ ПЛАШКА*/
+
 .ssilki{
     color: black;
 }
@@ -90,6 +100,7 @@ body {
     padding-right: 150px;
     letter-spacing: 2px;
 }
+
 
 .niz {
     font-size: 12pt;
@@ -123,6 +134,8 @@ header {
     height: 100px;
     width: 1550px;
     z-index: 2;
+    margin-bottom: 200px;
+    padding-top: 10px;
 }
 
 
@@ -130,3 +143,289 @@ header nav ul li {
         position: relative;
         float: left
     }
+
+.zagolovok_stranic {
+    font-size: 200%;
+    font-family: "Charis SIL", serif;
+    color: black;
+}
+
+
+
+/*ГЛАВНАЯ*/
+.body_glav {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 400px auto;
+    gap: 0;
+    margin: 0 3px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    nav ul li {
+        display: inline-block; /* Располагаем элементы в строку */
+    }
+
+
+.ssilki-pl {
+    padding: 15px;
+    text-decoration: none;
+    font-size: 140%;
+    font-family: "Charis SIL", serif;
+    color: black;
+    margin: 0 70px;
+}
+
+.osn {
+    background-image: url('../image/holl_glavstr 1.jpg'); /*  Проверьте путь к изображению */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    font-size: 700%;
+    font-family: "Charis SIL", serif;
+    color: white;
+    text-align: center;
+    letter-spacing: 6px;
+    padding: 50px 0; /* Добавил padding для лучшего отображения текста */
+}
+
+.niz_glav {
+    background-color: #EBEAE8;
+    font-family: "Charis SIL", serif;
+    color: black;
+    font-size: 280%;
+    text-align: center;
+    letter-spacing: 2px;
+    padding: 20px 0; /* Добавил padding для лучшего отображения текста */
+}
+
+
+
+/*Бронирование*/
+
+.bron {
+    background-color: #EBEAE8;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /*Количество столбцов */
+
+    grid-template-rows: 100px 200px 350px 350px 350px 350px;
+    /*Строки */
+
+    gap: 10px 10px;
+    /*расстояние между ячейками */
+    margin: 0px 3px;
+}
+
+.nadpis_bron {
+    grid-column: span 2;
+    background-color: #EBEAE8;
+    font-size: 280%;
+    margin-top: -30px;
+    font-family: "Charis SIL", serif;
+    color: black;
+    text-align: center;
+    letter-spacing: 2px;
+    padding-top:50px;
+}
+
+
+
+.photo_b {
+    height: 300px;
+    margin: 30px 0px 0px 20px;
+    float: left;
+}
+
+
+.photo_b_niz {
+    height: 310px;
+    margin: 30px -50px 0px 400px;
+    float: left;
+}
+
+
+
+
+.opis_b1 {
+    font-family: "Charis SIL", serif;
+    color: black;
+    font-size: 40px;
+    text-align: center;
+    letter-spacing: 4px;
+    line-height: 35px;
+    margin-top: 40px;
+    padding-top: 20px;
+}
+
+.opis2_b2 {
+    font-family: "Charis SIL", serif;
+    color: black;
+    font-size: 27px;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: -30px;
+    padding-top: 30px;
+}
+
+
+
+
+
+.link-to-room {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    /* Пример цвета */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    /* Скругленные углы */
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+
+
+
+
+/*О нас*/
+.body_onas {
+    display: grid;
+    grid-template-columns: 1fr;
+    /*Количество столбцов */
+
+    grid-template-rows: 100px 630px;
+    /*Строки */
+
+    gap: 0px;
+    /*расстояние между ячейками */
+    margin: 0px 3px;
+}
+
+.zad_onas {
+    background-image: url(/image/o_nas.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 50px 10px 50px 10px;
+    font-size: 280%;
+    font-family: "Charis SIL", serif;
+    color: white;
+    text-align: center;
+    letter-spacing: 1px;
+    word-spacing: 10px;
+}
+
+
+/*Контакты*/
+.body_cont {
+    background-color: #EBEAE8;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /*Количество столбцов */
+
+    grid-template-rows: 100px 320px 100px 90px 90px;
+    /*Строки */
+
+    gap: 5px 5px;
+    /*расстояние между ячейками */
+    margin: 0px 3px;
+}
+
+
+.lev_cont {
+    grid-row: span 4;
+    font-family: "Charis SIL", serif;
+    color: black;
+    font-size: 250%;
+    float: right;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-left: -50px;
+    margin-top:0px;
+}
+
+.adres_c {
+    font-family: "Charis SIL", serif;
+    color: black;
+    font-size: 150%;
+    float: right;
+    padding-left: 100px;
+}
+
+.vk_c {
+    font-family: "Charis SIL", serif;
+    color: black;
+    font-size: 150%;
+    padding-top:20px
+}
+
+.tg_c {
+    margin-top: -30px;
+    font-family: "Charis SIL", serif;
+    color: black;
+    font-size: 150%;
+}
+
+
+/*ПРОСОМТР БРОНИ*/
+.bron_prosmotr {
+    background-color: #EBEAE8;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /*Количество столбцов */
+
+    grid-template-rows: 100px 430px 430px;
+    /*Строки */
+
+    gap: 10px 10px;
+    /*расстояние между ячейками */
+    margin: 0px 3px;
+}
+
+.photo_bb {
+    max-width: none;
+    max-height: 420px;
+    max-width: 690px;
+    width: 100%;
+    margin: 10px 0px 0px 10px;
+}
+
+.nadpis_bron_prosmotr {
+    background-color: #EBEAE8;
+    font-size: 280%;
+    margin-top: 30px;
+    font-family: "Charis SIL", serif;
+    color: black;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 50px;
+}
+
+.opis_br_prosmotr {
+    background-color: #EBEAE8;
+    font-size: 220%;
+    margin-top: -20px;
+    font-family: "Charis SIL", serif;
+    color: black;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.but_zabron {
+    background-color: #9CAB9B;
+    width: 500px;
+    height: 130px;
+    font-family: "Charis SIL", serif;
+    font-size: 300%;
+    padding: 30px;
+    margin-left: 150px;
+    border: none;
+    color: black;
+}

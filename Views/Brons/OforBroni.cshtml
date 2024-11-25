@@ -1,67 +1,71 @@
 ﻿@model ptoba_svoego_vhoda_reg_2.Models.Bron
 @{
-    // ViewData["Title"] = "Оформить бронирование";
+     ViewData["Title"] = "Оформить бронирование";
 }
 
-@* <header> *@
-@*     <nav> *@
-@*         <ul style="list-style: none;"> *@
-@*             <li> *@
-@*                 <a href="glav.html"> *@
-@*                     <img src="~/image/logotip2.jpg" *@
-@*                          style="height: 65px; padding: 0px 20px 0px 20px"> *@
-@*                 </a> *@
-@*             </li> *@
-@*             <li><a href="glav.html" class="ssilki-pl" style="margin-top: -10px; ">Зеленый <br> Мыс </a></li> *@
-@*             <li><a href="bronirovanie.html" class="ssilki-pl" style="padding-left: 60px;">Бронирование</a></li> *@
-@*             <li><a href="onas.html" class="ssilki-pl">О нас</a></li> *@
-@*             <li><a href="contacti.html" class="ssilki-pl">Контакты</a></li> *@
-@*             <li> *@
-@*                 <a href="profil.html"> <img src="~/image/profil.jpg" style="height: 80px; padding-left: 100px"></a> *@
-@*             </li> *@
+<header >
+    <nav>
+        <ul style="list-style: none;">
+            <li>
+                <a asp-action="glav">
+                    <img src="~/image/logotip2.jpg"
+                         style="height: 65px; padding: 0px 20px 0px 20px">
+                </a>
+            </li>
+            <li><a asp-controller="Brons" asp-action="glav" class="ssilki-pl" style="margin-top: -10px; ">Зеленый <br> Мыс </a></li>
+            <li><a asp-controller="Brons" a asp-action="bronirovanie" class="ssilki-pl" style="padding-left: 60px;">Бронирование</a></li>
+            <li><a asp-controller="Brons" a asp-action="onas" class="ssilki-pl">О нас</a></li>
+            <li><a asp-controller="Brons" a asp-action="contacti" class="ssilki-pl">Контакты</a></li>
+            <li>
+                <a asp-controller="Users" asp-action="Profile"> <img src="~/image/profil.jpg" style="height: 80px; padding-left: 100px"></a>
+            </li>
 
-@*         </ul> *@
-@*     </nav> *@
-@* </header> *@
+        </ul>
+
+    </nav>
+</header>
 
 
-<h1>Оформить бронирование</h1>
-
+<body style="background-color:#EBEAE8; margin-left:100px;">
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="OforBroni" method="post">
+        <form asp-action="OforBroni" method="post" style="margin-top: 100px; ">
+
+            <p class="zagolovok_stranic">Оформить бронирование</p>
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="NomerId" class="control-label"></label>
+            <div class="form-group" style="margin-bottom:40px">
+                <label asp-for="NomerId" class="control-label">Название номера</label>
                 <select asp-for="NomerId" class="form-control" asp-items="ViewBag.NomerId"></select>
                 <span asp-validation-for="NomerId" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Data_zaezd" class="control-label"></label>
+                <div class="form-group" style="margin-bottom:40px">
+                <label asp-for="Data_zaezd" class="control-label">Дата заезда</label>
                 <input type="date" asp-for="Data_zaezd" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="Data_zaezd" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Data_viezd" class="control-label"></label>
+                <div class="form-group" style="margin-bottom:40px">
+                <label asp-for="Data_viezd" class="control-label">Дата выезда</label>
                 <input type="date" asp-for="Data_viezd" class="form-control" />
                 <span asp-validation-for="Data_viezd" class="text-danger"></span>
             </div>
 
-            
-            <div class="form-group">
-                <input type="submit" value="Забронировать" class="btn btn-primary" />
-            </div>
+                <div id="bookedPeriods"> </div>
+                <div class="form-group">
+                    <label asp-for="Stoimost" class="control-label" style="font-size:140%">Итого к оплате: </label>
+                    <input type="hidden" asp-for="Stoimost" id="Stoimost" />  <!-- Скрытое поле для Стоимости -->
+                    <span id="totalCost"></span>
+                    <span asp-validation-for="Stoimost" class="text-danger"></span>
+                </div>
 
-            <div id="bookedPeriods"></div>
-            <div class="form-group">
-                <label asp-for="Stoimost" class="control-label">Стоимость</label>
-                <input type="hidden" asp-for="Stoimost" id="Stoimost" />  <!-- Скрытое поле для Стоимости -->
-                <span id="totalCost"></span>
-                <span asp-validation-for="Stoimost" class="text-danger"></span>
-            </div>
+                <div class="form-group" style="margin-bottom:40px; margin-left:-90px">
+                    <input type="submit" value="Забронировать" class="but_reg" />
+                </div>
+
+
  
         </form>
         
@@ -69,7 +73,7 @@
 
 
 </div>
-
+</body>
 
 
 
