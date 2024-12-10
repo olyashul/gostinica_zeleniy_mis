@@ -23,7 +23,7 @@
  <div class="body_reg">
 
         <div class="verh">
-            <img src="~/image/logotip1.jpg" style="height: 200px; padding: 20px 0px 0px 200px">
+            <img src="~/image/logotip-Photoroom (2).png" style="height: 200px; padding: 20px 0px 0px 200px;">
             <p style=" float: right;"> &nbsp; &nbsp;Гостиница <br> &nbsp;Зеленый Мыс &nbsp;</p>
         </div>
 
@@ -33,7 +33,7 @@
 <form asp-action="Login" method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="PhoneNumber" class="control-label"></label>
+        <label asp-for="PhoneNumber" class="control-label"> Номер телефона</label>
         <input asp-for="PhoneNumber" class="form-control" id="phone" placeholder="+7 (___) ___-____" />
         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
         <script>
@@ -62,7 +62,7 @@
         </script>
     </div>
     <div class="form-group">
-        <label asp-for="Password" class="control-label"></label>
+        <label asp-for="Password" class="control-label"> Пароль</label>
         <input asp-for="Password" type="password" class="form-control" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>

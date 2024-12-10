@@ -1,5 +1,6 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    font-family: "Charis SIL", serif;
 }
 
 @media (min-width: 768px) {
@@ -428,4 +429,28 @@ nav ul {
     margin-left: 150px;
     border: none;
     color: black;
+}
+
+
+
+
+/*œ–Œ‘»À‹*/
+.info_admin {
+    grid-column: span 2;
+    font-size: 100%;
+    font-family: "Charis SIL", serif;
+    color: black;
+    text-align: center;
+    padding: 2px;
+    margin-bottom:30px;
+}
+
+/*Œ‘Œ–ÃÀ≈Õ»≈ ¡–ŒÕ»*/
+.of_zasel {
+    font-size: 250%;
+    font-family: "Charis SIL", serif;
+    color: black;
+    padding-left: 40px;
+    letter-spacing: 2px;
+    margin-top: 200px;
 }

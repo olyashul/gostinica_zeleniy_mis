@@ -26,10 +26,11 @@
 </header>
 
 
-<body style="background-color:#EBEAE8; margin-left:100px;">
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="OforBroni" method="post" style="margin-top: 100px; ">
+<body style="background-color:#EBEAE8;">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Левая часть - форма бронирования -->
+            <form asp-action="OforBroni" method="post" style="margin-top: 100px; margin-left:100px;">
 
             <p class="zagolovok_stranic">Оформить бронирование</p>
 
@@ -68,8 +69,16 @@
 
  
         </form>
-        
-    </div>
+        </div>
+            <div class="col-md-6">
+                <!-- Правая часть - информация о заселении/выселении -->
+                <div class="of_zasel">
+                    Заселение в номер происходит с 14:00 по местному времени,  а выселение до 12:00 по  местному
+                    времени. В
+                    стоимость номера входит абонемент на посещение  бассейна в отеле и завтраки.
+                </p>
+            </div>
+            </div>
 
 
 </div>

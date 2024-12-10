@@ -4,41 +4,73 @@
     ViewData["Title"] = "Профиль";
 }
 
+<header>
+    <nav>
+        <ul style="list-style: none;">
+            <li>
+                <a asp-action="glav">
+                    <img src="~/image/logotip2.jpg"
+                         style="height: 65px; padding: 0px 20px 0px 20px">
+                </a>
+            </li>
+            <li><a asp-controller="Brons" asp-action="glav" class="ssilki-pl" style="margin-top: -10px; ">Зеленый <br> Мыс </a></li>
+            <li><a asp-controller="Brons" a asp-action="bronirovanie" class="ssilki-pl" style="padding-left: 60px;">Бронирование</a></li>
+            <li><a asp-controller="Brons" a asp-action="onas" class="ssilki-pl">О нас</a></li>
+            <li><a asp-controller="Brons" a asp-action="contacti" class="ssilki-pl">Контакты</a></li>
+            <li>
+                <a asp-controller="Users" asp-action="Profile"> <img src="~/image/profil.jpg" style="height: 80px; padding-left: 100px"></a>
+            </li>
 
-<h2>Ваш профиль</h2>
-@if (Model != null)
-{
-    <p>ID: @Model.Id</p>
-    <p>Имя: @Model.FirstName</p>
-    <p>Фамилия: @Model.LastName</p>
-    <p>Номер телефона: @Model.PhoneNumber</p>
-    <p>Email: @Model.Email</p>
-    <h3>Ваши бронирования:</h3>
-    @if (Model.Brons.Any())
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Номер</th>
-                    <th>Дата заезда</th>
-                    <th>Дата выезда</th>
-                    <th>Стоимость</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var bron in Model.Brons)
+        </ul>
+
+    </nav>
+</header>
+
+
+<body style="background-color:#EBEAE8;">
+    <div class="row">
+        <div>
+            <form style="margin-top: 100px; margin-left:100px; ">
+               <h2>Ваш профиль</h2>
+               @if (Model != null)
                 {
-                    <tr>
+
+                    <p>Имя: @Model.FirstName</p>
+                    <p>Фамилия: @Model.LastName</p>
+                    <p>Номер телефона: @Model.PhoneNumber</p>
+                    <p>Email: @Model.Email</p>
+                    <h3>Ваши бронирования:</h3>
+                    <div class="info_admin">
+                        <p>
+                            Для изменения информации профиля обратитесь по телефону к администратору. При смене контактных данных
+                            администратор может попросить предъявить документ, подтверждающий Вашу личность.
+                        </p>
+                    </div>
+                    @if (Model.Brons.Any())
+                      {
+                         <table class="table">
+                           <thead>
+                             <tr>
+                               <th>Номер</th>
+                               <th>Дата заезда</th>
+                               <th>Дата выезда</th>
+                               <th>Стоимость</th>
+                            </tr>
+                          </thead>
+                        <tbody>
+                        @foreach (var bron in Model.Brons)
+                         {
+                        <tr>
                         <td>@bron.Nomer.Name</td>
                         <td>@bron.Data_zaezd.ToShortDateString()</td>
                         <td>@bron.Data_viezd.ToShortDateString()</td>
                         <td>@bron.Stoimost</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
+                        </tr>
+                           }
+                     </tbody>
+                    </table>
+                     }
+            else
     {
         <p>У вас нет активных бронирований.</p>
     }
@@ -47,3 +79,10 @@ else
 {
     <p>Вы не авторизованы. Пожалуйста, <a asp-action="Login" asp-controller="Account">войдите</a>.</p>
 }
+            </form>
+
+        </div>
+
+        
+    </div>
+</body>
